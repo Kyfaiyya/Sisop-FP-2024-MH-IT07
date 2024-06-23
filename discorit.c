@@ -164,8 +164,6 @@ int main(int argc, char *argv[]) {
                         }
                     } else if (strncmp(command, "CREATE CHANNEL ", 15) == 0) {
                         snprintf(command, BUFFER_SIZE, "CREATE CHANNEL %s", command + 15);
-                    } else if (strncmp(command, "CREATE ROOM ", 12) == 0) {
-                        snprintf(command, BUFFER_SIZE, "CREATE ROOM %s", command + 12);
                     } else if (strcmp(command, "EXIT") == 0) {
                         if (strlen(room) > 0) {
                             room[0] = '\0';
