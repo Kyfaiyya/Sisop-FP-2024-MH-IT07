@@ -8,6 +8,9 @@ Randist Prawandha Putera 5027231059 Kelas B
 
 Radella Chesa Syaharani 5027231064 Kelas A
 
+
+REVISI : 
+
 ## server.c
 ### 1. Header dan Deklarasi
 ````
