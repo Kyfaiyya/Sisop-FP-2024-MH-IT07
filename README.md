@@ -32,9 +32,9 @@ Radella Chesa Syaharani 5027231064 Kelas A
 #define PORT 8080
 #define BUF_SIZE 1024
 #define MAX_CLIENTS 100
-#define USER_FILE "/home/ax3lrod/sisop/fp/DiscorIT/users.csv"
-#define DISCORIT_DIR "/home/ax3lrod/sisop/fp/DiscorIT"
-#define CHANNEL_FILE "/home/ax3lrod/sisop/fp/DiscorIT/channels.csv"
+#define USER_FILE "/home/kyfaiyya/SISOP/FP/DiscorIT/users.csv"
+#define DISCORIT_DIR "/home/kyfaiyya/SISOP/FP/DiscorIT"
+#define CHANNEL_FILE "/home/kyfaiyya/SISOP/FP/DiscorIT/channels.csv"
 
 #define MAX_USERS 100
 //int logged_in_users[MAX_USERS] = {0};
@@ -3155,7 +3155,7 @@ berfungsi sebagai klien chat yang dapat menghubungkan diri ke server, login deng
 ````
 #define PORT 8080
 #define BUF_SIZE 1024
-#define DISCORIT_DIR "/home/ax3lrod/sisop/fp/DiscorIT"
+#define DISCORIT_DIR "/home/kyfaiyya/SISOP/FP/DiscorIT"
 
 typedef struct {
     char channel[BUF_SIZE];
