@@ -88,3 +88,125 @@ int client_count = 0;
 - handle_client(void *arg): Fungsi untuk menangani komunikasi dengan klien.
 - bcrypt(const char *password): Fungsi untuk mengenkripsi kata sandi menggunakan bcrypt.
 - Fungsi lain untuk mengelola saluran, ruangan, dan pengguna, serta untuk mengirim dan mengedit pesan.
+
+Deskripsi Fungsi :
+```
+void *handle_client(void *arg);
+char *bcrypt(const char *password);
+void list_channels(int socket);
+void create_channel(int socket, const char *username, int id, const char *channel_name, const char *key);
+void edit_channel(int socket, const char *username, const char *channel_name, const char *new_channel_name);
+void delete_channel(int socket, const char *channel_name);
+void kick_user(int socket, const char *channel_name, const char *username);
+void join_channel(int socket, const char *username, const char *channel, int id,const char *key);
+void create_room(int socket, const char *username, const char *channel, const char *room);
+void join_room(int socket, const char *username, const char *channel, const char *room);
+void edit_room(int socket, const char *username, const char *channel, const char *room, const char *new_room);
+void delete_room(int socket, const char *channel, const char *room, const char *username);
+void delete_all_rooms(int socket, const char *channel, const char *username);
+void list_rooms(int socket, const char *channel);
+void list_users(int socket);
+void list_channel_users(int socket, const char *channel);
+void edit_user_name(int socket, const char *username, const char *new_username);
+void edit_user_name_other(int socket, const char *username, const char *new_username);
+void edit_user_password(int socket, const char *username, const char *new_password);
+void remove_user(int socket, const char *username);
+void ban_user(int socket, const char *channel, const char *username);
+void unban_user(int socket, const char *channel, const char *username);
+void chat(int socket, const char *channel, const char *room, const char *username, const char *message);
+void edit_chat(int socket, const char *channel, const char *room, const char *username, int id_chat, const char *new_message);
+void delete_chat(int socket, const char *channel, const char *room, int id_chat);
+void see_chat(int socket, const char *channel, const char *room);
+//void channel_room_info_for_monitor(int socket, const char *channel, const char *room);
+
+/*void broadcast_message(const char *message) {
+    for (int i = 0; i < client_count; i++) {
+        if (clients[i].socket != 0) {
+            send(clients[i].socket, message, strlen(message), 0);
+        }
+    }
+}*/
+
+```
+Channel Management:
+
+- list_channels: Menampilkan daftar saluran yang tersedia.
+- create_channel: Membuat saluran baru.
+- edit_channel: Mengubah nama saluran yang ada.
+- delete_channel: Menghapus saluran.
+- kick_user: Mengeluarkan pengguna dari saluran.
+- join_channel: Bergabung dengan saluran yang ada.
+
+Room Management:
+
+- create_room: Membuat ruangan dalam saluran tertentu.
+- join_room: Bergabung dengan ruangan dalam saluran tertentu.
+- edit_room: Mengubah nama ruangan yang ada.
+- delete_room: Menghapus ruangan.
+- delete_all_rooms: Menghapus semua ruangan dalam saluran tertentu.
+- list_rooms: Menampilkan daftar ruangan dalam saluran tertentu.
+
+User Management:
+
+- list_users: Menampilkan daftar pengguna.
+- list_channel_users: Menampilkan daftar pengguna dalam saluran tertentu.
+- edit_user_name: Mengubah nama pengguna sendiri.
+- edit_user_name_other: Mengubah nama pengguna lain (oleh monitor).
+- edit_user_password: Mengubah kata sandi pengguna.
+- remove_user: Menghapus pengguna.
+- ban_user: Melarang pengguna dari saluran tertentu.
+- unban_user: Mengizinkan kembali pengguna yang dilarang dari saluran.
+
+Chat Management:
+
+- chat: Mengirim pesan dalam ruangan tertentu.
+- edit_chat: Mengedit pesan yang sudah dikirim.
+- delete_chat: Menghapus pesan yang sudah dikirim.
+- see_chat: Melihat pesan dalam ruangan tertentu.
+
+Fungsi remove direktory
+
+```
+int remove_directory(const char *path) {
+    DIR *d = opendir(path);
+    size_t path_len = strlen(path);
+    int r = -1;
+
+    if (d) {
+        struct dirent *p;
+        r = 0;
+        while (!r && (p = readdir(d))) {
+            int r2 = -1;
+            char *buf;
+            size_t len;
+
+            // Skip the names "." and ".." as we don't want to recurse on them
+            if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
+                continue;
+
+            len = path_len + strlen(p->d_name) + 2;
+            buf = malloc(len);
+
+            if (buf) {
+                struct stat statbuf;
+                snprintf(buf, len, "%s/%s", path, p->d_name);
+
+                if (!stat(buf, &statbuf)) {
+                    if (S_ISDIR(statbuf.st_mode))
+                        r2 = remove_directory(buf);
+                    else
+                        r2 = unlink(buf);
+                }
+                free(buf);
+            }
+            r = r2;
+        }
+        closedir(d);
+    }
+
+    if (!r)
+        r = rmdir(path);
+
+    return r;
+}
+```
